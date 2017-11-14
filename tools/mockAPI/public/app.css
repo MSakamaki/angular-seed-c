@@ -1,0 +1,19 @@
+.container {
+  display: flex;
+  flex-direction: row;
+}
+
+.apis {
+		flex: 1;
+		order: 1;
+}
+
+.ctrl_menu {
+  width: 300px;
+		order: 2;
+}
+
+.container-col {
+  display: flex;
+  flex-direction: column;
+}

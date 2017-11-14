@@ -1,0 +1,8 @@
+{
+  "API_KEY": "sample",
+  "API_NAME": "サンプルAPI",
+  "data": [
+    { "id": 1, "name":"sample" },
+    { "id": 2, "name":"sample2" }
+  ]
+}
