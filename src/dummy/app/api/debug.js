@@ -15,7 +15,6 @@
 
       if (typeof json === 'string') json = JSON.parse(json);
 
-      console.log('json', json);
       return fetch(`/debug/${url}`, {
         method: 'PUT',
         body: JSON.stringify({

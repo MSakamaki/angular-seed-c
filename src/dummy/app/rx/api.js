@@ -12,6 +12,9 @@
     }
   };
 
+  /**
+   * 更新クリック => 画面リフレッシュイベント
+   */
   $.rx.api.putDebug.subscribe(val=>{
     api.debug.put(val.url, val.wait, val.state, val.json)
       .then(()=>{

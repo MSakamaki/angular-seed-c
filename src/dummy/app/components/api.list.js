@@ -20,9 +20,8 @@ class ApiList extends React.Component {
 
     render() {
         const {apis} = this.state;
-        console.log('ApiList.apis', apis);
         return (
-            <ul>
+            <ul className="list-group">
                 {apis.map(val => <ApiListItem key={val.api} api={val.api} />)}
             </ul>
         )
@@ -30,7 +29,6 @@ class ApiList extends React.Component {
 
     _apiCall() {
         return api.debug.apis().then(apis=>{
-            console.log('apis:', apis);
             this.setState({ apis: apis });
         });
     }

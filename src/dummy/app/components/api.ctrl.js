@@ -2,21 +2,23 @@
 class ApiCtrl extends React.Component {
 
   WAIT_TIME = [0, 1000, 5000, 10000];
-  API_STATE = [200,400,401,404,500];
+  API_STATE = [200, 400, 401, 404, 500];
+
+  errorMessages='';
 
   constructor(props) {
     super(props);
-    this.state = { url: '', wait: 0, state:200, json: '' };
+    this.state = { url: '', wait: 0, state: 200, json: '' };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
 
-    this.subscription = rx.event.apiSelect.subscribe(api=>{
+    this.subscription = rx.event.apiSelect.subscribe(api => {
       this.setState({
         url: api.api,
         wait: api.wait,
         state: api.state,
         json: api.json,
-       });
+      });
     });
   }
 
@@ -35,16 +37,18 @@ class ApiCtrl extends React.Component {
   }
 
   render() {
-    return this.renderForm();
+    const { url, JSONParseError } = this.state;
+    this.errorMessages='';
+    return url ? this.renderForm(JSONParseError) : <span> Select API </span>;
   }
 
-  renderForm() {
+  renderForm(JSONParseError) {
     return (
       <form onSubmit={this.handleSubmit}>
         <div class="form-group">
           <label for="wait">WAIT TIME</label>
           <select class="form-control" name="wait" id="wait" value={this.state.wait} onChange={this.handleChange}>
-            {this.WAIT_TIME.map(wait => <option value={wait}>{wait/1000}秒</option>)}
+            {this.WAIT_TIME.map(wait => <option value={wait}>{wait / 1000}秒</option>)}
           </select>
         </div>
         <div class="form-group">
@@ -56,14 +60,27 @@ class ApiCtrl extends React.Component {
         <div class="form-group">
           <label for="json">JSON</label>
           <textarea class="form-control" name="json" id="json" rows="10" cols="30"
-            value={this.bitfyJSON(this.state.json)} onChange={this.handleChange}></textarea>
+            value={this.butifyJSON(this.state.json)} onChange={this.handleChange}></textarea>
+          {this.ErrorMessage }
         </div>
         <button type="submit" class="btn btn-primary">設定</button>
-    </form>);
+      </form>);
   }
 
-  bitfyJSON(json) {
-    console.log(json);
-    return JSON.stringify(json);
+  get ErrorMessage() {
+    return this.errorMessages ? <span className="text-danger">{this.errorMessages }</span> : <span></span>;
+  }
+  butifyJSON(json) {
+    try {
+      json = this._jsonParse(json);
+    } catch (e) {
+      this.errorMessages = e.message;
+    }
+    return json;
+  }
+
+  _jsonParse(json){
+    if (typeof json === 'string') json = JSON.parse(json);
+    return JSON.stringify(json, null, 4);
   }
 }
