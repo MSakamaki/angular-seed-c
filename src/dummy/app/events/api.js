@@ -3,9 +3,11 @@
 ($=>{
 
   $.rx = {
+    /** 画面イベント */
     event:{
       apiSelect: new Rx.Subject(),
     },
+    /** api call イベント */
     api: {
       putDebug: new Rx.Subject(),
       putDebugComplite: new Rx.Subject(),
@@ -16,7 +18,7 @@
    * 更新クリック => 画面リフレッシュイベント
    */
   $.rx.api.putDebug.subscribe(val=>{
-    api.debug.put(val.url, val.wait, val.state, val.json)
+    $.api.debug.put(val)
       .then(()=>{
         $.rx.api.putDebugComplite.next();
       },()=> {
@@ -24,4 +26,4 @@
       });
   });
 
-})(window);
+})(window.Modules);

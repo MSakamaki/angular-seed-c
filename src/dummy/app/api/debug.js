@@ -11,16 +11,14 @@
       return fetch(`/debug/${url}`).then(res => res.json());
     }
 
-    put(url, wait, state, json) {
+    put(api) {
 
-      if (typeof json === 'string') json = JSON.parse(json);
-
-      return fetch(`/debug/${url}`, {
+      return fetch(`/debug/${api.url}`, {
         method: 'PUT',
         body: JSON.stringify({
-          wait: wait,
-          status: state,
-          data: json,
+          wait: api.wait,
+          status: api.status,
+          data: api.json,
         }),
       }).then(res => res.json());
     }
@@ -31,4 +29,4 @@
     debug: new DebugApi()
   }
 
-})(window);
+})(window.Modules);

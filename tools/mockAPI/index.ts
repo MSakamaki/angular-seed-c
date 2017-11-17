@@ -6,7 +6,7 @@ require('browser-sync')({
   middleware: MOCK_API,
   port: 3030,
   directory: true,
-  //startPath: 'index.html', ///this.APP_BASE,
+  startPath: 'debug.html', ///this.APP_BASE,
   open: false,
   //injectChanges: false,,
   https: {
